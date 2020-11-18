@@ -39,3 +39,10 @@ func (v *Intvector) Clear() {
 	v.vec = nil
 	runtime.GC()
 }
+
+//Reverse function can be used to reverse the vector
+func (v *Intvector) Reverse() {
+	for i := 0; i < len(v.vec)/2; i++ {
+		v.vec[i], v.vec[len(v.vec)-1-i] = v.vec[len(v.vec)-i-1], v.vec[i]
+	}
+}
