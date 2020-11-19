@@ -15,6 +15,11 @@ func (v *Intvector) Push(s int) {
 	v.vec = append(v.vec, s)
 }
 
+//Insert appends a new slice to an existing slice
+func (v *Intvector) Insert(s ...int) {
+	v.vec = append(v.vec, s...)
+}
+
 //Pop removes the first element from the slice and retruns it
 func (v *Intvector) Pop() (int, error) {
 	var s int
