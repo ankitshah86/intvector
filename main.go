@@ -1,6 +1,7 @@
 package intvector
 
 import (
+	"errors"
 	"runtime"
 )
 
@@ -15,7 +16,7 @@ func (v *Intvector) Push(s int) {
 }
 
 //Pop removes the first element from the slice and retruns it
-func (v *Intvector) Pop() int {
+func (v *Intvector) Pop() (int, error) {
 	var s int
 
 	if len(v.vec) > 0 {
@@ -23,10 +24,10 @@ func (v *Intvector) Pop() int {
 		v.vec = v.vec[:len(v.vec)-1]
 	} else {
 		//add better handling here
-		return 0
+		return 0, errors.New("Empty Vector")
 	}
 
-	return s
+	return s, nil
 }
 
 //Size returns the current size of the vector
