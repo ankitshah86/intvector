@@ -52,3 +52,8 @@ func (v *Intvector) Reverse() {
 		v.vec[i], v.vec[len(v.vec)-1-i] = v.vec[len(v.vec)-i-1], v.vec[i]
 	}
 }
+
+//At allows for accesing any element of the vector
+func (v *Intvector) At(i int) int {
+	return v.vec[i]
+}
