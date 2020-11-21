@@ -75,4 +75,15 @@ func (v *Intvector) Swap(idx1 int, idx2 int) error {
 	return nil
 }
 
+//Set function can be used to set the value at a specific index in the vector
+func (v *Intvector) Set(idx int, value int) error {
+
+	if idx >= len(v.vec) {
+		return errors.New("idx out of range for vector of length " + strconv.Itoa(len(v.vec)))
+	}
+
+	v.vec[idx] = value
+	return nil
+}
+
 //add sorting functionality
