@@ -63,11 +63,11 @@ func (v *Intvector) At(i int) int {
 func (v *Intvector) Swap(idx1 int, idx2 int) error {
 
 	if idx1 >= len(v.vec) {
-		return errors.New("idx1 out of range for vector of length" + strconv.Itoa(len(v.vec)))
+		return errors.New("idx1 out of range for vector of length " + strconv.Itoa(len(v.vec)))
 	}
 
 	if idx2 >= len(v.vec) {
-		return errors.New("idx2 out of range for vector of length" + strconv.Itoa(len(v.vec)))
+		return errors.New("idx2 out of range for vector of length " + strconv.Itoa(len(v.vec)))
 	}
 
 	v.vec[idx1], v.vec[idx2] = v.vec[idx2], v.vec[idx1]
