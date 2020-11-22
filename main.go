@@ -62,11 +62,15 @@ func (v *Intvector) At(i int) int {
 //Swap function swaps two elements of the vector
 func (v *Intvector) Swap(idx1 int, idx2 int) error {
 
-	if idx1 >= len(v.vec) {
+	if idx1 == idx2 {
+		return errors.New("idx1 and idx2 are the same number, no swap was performed")
+	}
+
+	if idx1 >= len(v.vec) || idx1 < 0 {
 		return errors.New("idx1 out of range for vector of length " + strconv.Itoa(len(v.vec)))
 	}
 
-	if idx2 >= len(v.vec) {
+	if idx2 >= len(v.vec) || idx2 < 0 {
 		return errors.New("idx2 out of range for vector of length " + strconv.Itoa(len(v.vec)))
 	}
 
@@ -77,6 +81,10 @@ func (v *Intvector) Swap(idx1 int, idx2 int) error {
 
 //Set function can be used to set the value at a specific index in the vector
 func (v *Intvector) Set(idx int, value int) error {
+
+	if idx < 0 {
+		return errors.New("idx must be a positive number")
+	}
 
 	if idx >= len(v.vec) {
 		return errors.New("idx out of range for vector of length " + strconv.Itoa(len(v.vec)))
