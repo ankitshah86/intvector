@@ -95,3 +95,21 @@ func (v *Intvector) Set(idx int, value int) error {
 }
 
 //add sorting functionality
+
+//SortedPush pushes the incoming element into the vector in a sorted way
+//it is assumed that the Vector is already sorted
+func (v *Intvector) SortedPush(n int) {
+	v.vec = append(v.vec, n)
+	//see if this can be optimized
+	if len(v.vec) > 1 && v.vec[len(v.vec)-2] > n {
+		idx := len(v.vec) - 1
+		for i := len(v.vec) - 2; i >= 0; i-- {
+			if n < v.vec[i] {
+				v.Swap(idx, i)
+				idx = i
+			} else {
+				break
+			}
+		}
+	}
+}
