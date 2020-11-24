@@ -3,6 +3,7 @@ package intvector
 import (
 	"errors"
 	"runtime"
+	"sort"
 	"strconv"
 )
 
@@ -94,8 +95,6 @@ func (v *Intvector) Set(idx int, value int) error {
 	return nil
 }
 
-//add sorting functionality
-
 //SortedPush pushes the incoming element into the vector in a sorted way
 //it is assumed that the Vector is already sorted
 func (v *Intvector) SortedPush(n int) {
@@ -112,4 +111,9 @@ func (v *Intvector) SortedPush(n int) {
 			}
 		}
 	}
+}
+
+//Sort function sorts the vector
+func (v *Intvector) Sort() {
+	sort.Ints(v.vec)
 }
