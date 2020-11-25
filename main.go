@@ -117,3 +117,19 @@ func (v *Intvector) SortedPush(n int) {
 func (v *Intvector) Sort() {
 	sort.Ints(v.vec)
 }
+
+//IsSorted returns true if the vector is sorted
+func (v *Intvector) IsSorted() bool {
+
+	if len(v.vec) <= 1 {
+		return true
+	}
+
+	for i := 1; i < len(v.vec); i++ {
+		if v.vec[i] < v.vec[i-1] {
+			return false
+		}
+	}
+
+	return true
+}
