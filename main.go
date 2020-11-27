@@ -22,7 +22,7 @@ func (v *Intvector) Insert(s ...int) {
 	v.vec = append(v.vec, s...)
 }
 
-//Pop removes the first element from the slice and retruns it
+//Pop removes the last element from the slice and retruns it
 func (v *Intvector) Pop() (int, error) {
 	var s int
 
@@ -34,6 +34,19 @@ func (v *Intvector) Pop() (int, error) {
 		return 0, errors.New("Empty Vector")
 	}
 
+	return s, nil
+}
+
+//Shift removes the firs element from the slice and returns it
+func (v *Intvector) Shift() (int, error) {
+	var s int
+	if len(v.vec) > 0 {
+		s = v.vec[0]
+		v.vec = v.vec[1:len(v.vec)]
+	} else {
+		//add better handling here
+		return 0, errors.New("Empty Vector")
+	}
 	return s, nil
 }
 
@@ -120,16 +133,13 @@ func (v *Intvector) Sort() {
 
 //IsSorted returns true if the vector is sorted
 func (v *Intvector) IsSorted() bool {
-
 	if len(v.vec) <= 1 {
 		return true
 	}
-
 	for i := 1; i < len(v.vec); i++ {
 		if v.vec[i] < v.vec[i-1] {
 			return false
 		}
 	}
-
 	return true
 }
