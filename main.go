@@ -12,7 +12,7 @@ type Intvector struct {
 	vec []int
 }
 
-//Push inserts/pushes a new integer into the int slice
+//Push inserts/pushes a new integer at the back of the int slice
 func (v *Intvector) Push(s int) {
 	v.vec = append(v.vec, s)
 }
@@ -48,6 +48,11 @@ func (v *Intvector) Shift() (int, error) {
 		return 0, errors.New("Empty Vector")
 	}
 	return s, nil
+}
+
+//Unshift inserts a new integer in the front of the slice
+func (v *Intvector) Unshift(s int) {
+	v.vec = append([]int{s}, v.vec...)
 }
 
 //Size returns the current size of the vector
