@@ -148,3 +148,19 @@ func (v *Intvector) IsSorted() bool {
 	}
 	return true
 }
+
+//First returns the first element of the vector
+func (v *Intvector) First() (int, error) {
+	if len(v.vec) > 0 {
+		return v.vec[0], nil
+	}
+	return 0, errors.New("Empty Vector")
+}
+
+//Last returns the last element of the vector
+func (v *Intvector) Last() (int, error) {
+	if len(v.vec) > 0 {
+		return v.vec[len(v.vec)-1], nil
+	}
+	return 0, errors.New("Empty Vector")
+}
