@@ -116,18 +116,36 @@ func (v *Intvector) Set(idx int, value int) error {
 //SortedPush pushes the incoming element into the vector in a sorted way
 //it is assumed that the Vector is already sorted
 func (v *Intvector) SortedPush(n int) {
-	v.vec = append(v.vec, n)
-	//see if this can be optimized
-	if len(v.vec) > 1 && v.vec[len(v.vec)-2] > n {
-		idx := len(v.vec) - 1
-		for i := len(v.vec) - 2; i >= 0; i-- {
-			if n < v.vec[i] {
-				v.Swap(idx, i)
-				idx = i
-			} else {
+	if len(v.vec) == 0 {
+		v.vec = append(v.vec, n)
+	} else if len(v.vec) == 1 {
+		if v.vec[0] > n {
+			v.vec = append([]int{n}, v.vec...)
+		} else {
+			v.vec = append(v.vec, n)
+		}
+	} else if n <= v.vec[0] {
+		v.vec = append([]int{n}, v.vec...)
+	} else if n >= v.vec[len(v.vec)-1] {
+		v.vec = append(v.vec, n)
+	} else {
+		//use binary insertion here
+		l := 0
+		r := len(v.vec) - 2
+		m := 0
+
+		for !(v.vec[m] <= n && v.vec[m+1] >= n) {
+			m = (l + r) / 2
+			if v.vec[m] > n {
+				r = m - 1
+			} else if v.vec[m] < n {
+				l = m + 1
+			} else if v.vec[m] == n {
 				break
 			}
 		}
+		m = m + 1
+		v.vec = append(v.vec[:m], append([]int{n}, v.vec[m:]...)...)
 	}
 }
 
