@@ -185,32 +185,11 @@ func (v *Intvector) Last() (int, error) {
 
 //Search function is used to search an element in the vector
 func (v *Intvector) Search(n int) int {
-	//return first index of occurance
-	//if the vector is sorted, do binary search
-	//else linear search
-
-	if v.IsSorted() { //it may be a good idea to keep issorted in a variable
-		// binary search
-		l := 0
-		r := len(v.vec) - 1
-		m := -1
-
-		for l < r {
-			m = (r + l) / 2
-			if v.vec[m] > n {
-				r = m - 1
-			} else if v.vec[m] < n {
-				l = m + 1
-			} else if v.vec[m] == n {
-				return m
-			}
-		}
-
-	} else {
-		for i, v := range v.vec {
-			if v == n {
-				return i
-			}
+	//While it would be nice to use binary search here, keeping track of wether or not the vector is sorted results in considerable overhead with each operation.
+	//best is to assume the vector is unsorted and do a linear search
+	for i, v := range v.vec {
+		if v == n {
+			return i
 		}
 	}
 
@@ -219,3 +198,5 @@ func (v *Intvector) Search(n int) int {
 
 //add searchAll function
 //add sortedInsert function
+//add serialize function
+//add hash function
