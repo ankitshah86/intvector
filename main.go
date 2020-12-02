@@ -184,6 +184,7 @@ func (v *Intvector) Last() (int, error) {
 }
 
 //Search function is used to search an element in the vector
+//linear search is performed and the index is returned with the first occurance of an element
 func (v *Intvector) Search(n int) int {
 	//While it would be nice to use binary search here, keeping track of wether or not the vector is sorted results in considerable overhead with each operation.
 	//best is to assume the vector is unsorted and do a linear search
@@ -196,7 +197,20 @@ func (v *Intvector) Search(n int) int {
 	return -1
 }
 
-//add searchAll function
+//SearchAll function is used to search all the ocurrances of the given element in the vector
+func (v *Intvector) SearchAll(n int) []int {
+	//While it would be nice to use binary search here, keeping track of wether or not the vector is sorted results in considerable overhead with each operation.
+	//best is to assume the vector is unsorted and do a linear search
+
+	s := make([]int, 0)
+	for i, v := range v.vec {
+		if v == n {
+			s = append(s, i)
+		}
+	}
+	return s
+}
+
 //add sortedInsert function
 //add serialize function
 //add hash function
