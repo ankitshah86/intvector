@@ -228,7 +228,24 @@ func (v *Intvector) Min() (int, int) {
 	return min, idx
 }
 
-//Add max function
+//Max returns the maximum value and the corresponding index
+func (v *Intvector) Max() (int, int) {
+	if len(v.vec) == 0 {
+		return 0, -1
+	}
+	max := v.vec[0]
+	idx := 0
+
+	for i, v := range v.vec {
+		if v > max {
+			max = v
+			idx = i
+		}
+	}
+	return max, idx
+}
+
+//add scaleBy function
 
 //add sortedInsert function
 //add serialize function
