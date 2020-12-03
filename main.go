@@ -211,6 +211,25 @@ func (v *Intvector) SearchAll(n int) []int {
 	return s
 }
 
+//Min returns the minimum value and the corresponding index
+func (v *Intvector) Min() (int, int) {
+	if len(v.vec) == 0 {
+		return 0, -1
+	}
+	min := v.vec[0]
+	idx := 0
+
+	for i, v := range v.vec {
+		if v < min {
+			min = v
+			idx = i
+		}
+	}
+	return min, idx
+}
+
+//Add max function
+
 //add sortedInsert function
 //add serialize function
 //add hash function
