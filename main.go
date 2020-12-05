@@ -252,11 +252,25 @@ func (v *Intvector) ScaleBy(s int) {
 	}
 }
 
+//Average returns the average value of the entire vector
+func (v *Intvector) Average() float64 {
+
+	if len(v.vec) == 0 {
+		return 0.0
+	}
+	var s float64 = 0.0
+	sum := 0
+	for _, v := range v.vec {
+		sum += v
+	}
+	s = float64(sum) / float64(len(v.vec))
+	return s
+}
+
 //add summary funtion - with primary stats
 
 //add sortedInsert function
 //add serialize function
 //add hash function
-//add average/mean function
 //add median function
 //add mode function
