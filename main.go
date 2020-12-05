@@ -245,8 +245,18 @@ func (v *Intvector) Max() (int, int) {
 	return max, idx
 }
 
-//add scaleBy function
+//ScaleBy scales the entire vector by the given scalefactor
+func (v *Intvector) ScaleBy(s int) {
+	for i, value := range v.vec {
+		v.vec[i] = s * value
+	}
+}
+
+//add summary funtion - with primary stats
 
 //add sortedInsert function
 //add serialize function
 //add hash function
+//add average/mean function
+//add median function
+//add mode function
