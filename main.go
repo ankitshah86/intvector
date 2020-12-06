@@ -267,6 +267,11 @@ func (v *Intvector) Average() float64 {
 	return s
 }
 
+//Mean returns the mean value of the entire vector
+func (v *Intvector) Mean() float64 {
+	return v.Average()
+}
+
 //add summary funtion - with primary stats
 
 //add sortedInsert function
