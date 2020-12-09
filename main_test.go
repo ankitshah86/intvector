@@ -35,7 +35,23 @@ func TestInsert(t *testing.T) {
 	//the last elements must be th ones inserted
 	for i := newVecLength - 1; i > vecLength-1; i-- {
 		if s.vec[i] != sliceToInsert[i-vecLength] {
-			t.Errorf("Insert element Test failed`")
+			t.Errorf("Insert element Test failed")
 		}
 	}
+}
+
+func TestPop(t *testing.T) {
+
+	var s Intvector
+	s.Push(1)
+	num, err := s.Pop()
+	if err != nil || num != 1 {
+		t.Errorf("Pop Test failed")
+	}
+
+	num, err = s.Pop()
+	if err == nil || num != 0 {
+		t.Errorf("Pop Test failed")
+	}
+
 }
