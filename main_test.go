@@ -43,14 +43,19 @@ func TestInsert(t *testing.T) {
 	s.Insert(sliceToInsert...)
 	newVecLength := len(s.vec)
 
-	if newVecLength-vecLength != len(sliceToInsert) {
-		t.Errorf("Insert Length Test failed")
+	gotLengthDifference := newVecLength - vecLength
+	wantLenghtDifference := len(sliceToInsert)
+
+	if gotLengthDifference != wantLenghtDifference {
+		t.Errorf("Incorrect Vector length Difference : Want %d, got %d", wantLenghtDifference, gotLengthDifference)
 	}
 
-	//the last elements must be th ones inserted
+	//the last elements must be the ones inserted
 	for i := newVecLength - 1; i > vecLength-1; i-- {
-		if s.vec[i] != sliceToInsert[i-vecLength] {
-			t.Errorf("Insert element Test failed")
+		gotElem := s.vec[i]
+		wantElem := sliceToInsert[i-vecLength]
+		if gotElem != wantElem {
+			t.Errorf("Incorrect insert element at index %d, want %d, got %d", i, wantElem, gotElem)
 		}
 	}
 }
