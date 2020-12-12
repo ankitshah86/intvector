@@ -64,3 +64,18 @@ func TestPop(t *testing.T) {
 	}
 
 }
+
+func TestShift(t *testing.T) {
+	var s Intvector
+	s.Insert([]int{1, 2, 3}...)
+
+	got, err := s.Shift()
+	want := 1
+	if err != nil {
+		t.Errorf("Shift Test failed")
+	}
+
+	if got != want {
+		t.Errorf("Shift Test Failed got %d, want %d", got, want)
+	}
+}
