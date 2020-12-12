@@ -6,15 +6,21 @@ import (
 
 func TestPush(t *testing.T) {
 	var v Intvector
-	v.Push(5)
-	v.Push(6)
-	v.Push(7)
 	curLength := len(v.vec)
 	v.Push(4)
-	newLength := len(v.vec)
 
-	if !(newLength == curLength+1 && v.vec[len(v.vec)-1] == 4) {
-		t.Errorf("Push Test failed")
+	lengthGot := len(v.vec)
+	lengthWant := curLength + 1
+
+	if lengthGot != lengthWant {
+		t.Errorf("Incorrect Vector length : Want %d, got %d", lengthWant, lengthGot)
+	}
+
+	elemGot := v.vec[len(v.vec)-1]
+	elemWant := 4
+
+	if elemGot != elemWant {
+		t.Errorf("Incorrect last element : want %d,got %d", elemWant, elemGot)
 	}
 }
 
