@@ -63,7 +63,21 @@ func TestInsert(t *testing.T) {
 func TestPop(t *testing.T) {
 
 	var s Intvector
-	s.Push(1)
+
+	var testNum = 1
+	s.Push(testNum)
+
+	want := testNum
+	got, err := s.Pop()
+
+	if want != got {
+		t.Errorf("Pop Test failed. Want %d got %d", want, got)
+	}
+
+	if err != nil {
+		t.Errorf("Pop test failed with Error : %s", err)
+	}
+
 	num, err := s.Pop()
 	if err != nil || num != 1 {
 		t.Errorf("Pop Test failed")
