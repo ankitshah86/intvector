@@ -1,6 +1,7 @@
 package intvector
 
 import (
+	"errors"
 	"testing"
 )
 
@@ -78,16 +79,20 @@ func TestPop(t *testing.T) {
 		t.Errorf("Pop test failed with Error : %s", err)
 	}
 
-	num, err := s.Pop()
-	if err != nil || num != 1 {
-		t.Errorf("Pop Test failed")
+	//check if appropriate error is thrown in situations where the vector is empty
+	got, err = s.Pop()
+	want = 0
+
+	wantError := errors.New("Empty Vector")
+	gotError := err
+
+	if got != want {
+		t.Errorf("Pop Test failed. Want %d got %d", want, got)
 	}
 
-	num, err = s.Pop()
-	if err == nil || num != 0 {
-		t.Errorf("Pop Test failed")
+	if wantError.Error() != gotError.Error() {
+		t.Errorf("Pop Test failed, Want Error : %s, got Error : %s", wantError, gotError)
 	}
-
 }
 
 func TestShift(t *testing.T) {
