@@ -149,6 +149,21 @@ func (v *Intvector) SortedPush(n int) {
 	}
 }
 
+//UniquePush pushes the incoming element in the vector if it is not already present.
+//It returns true if the element was inserted, false otherwise
+//It is assumed that the vector is not sorted, linear search is used to ensure uniqueness
+func (v *Intvector) UniquePush(n int) bool {
+	isPushed := false
+	for _, v := range v.vec {
+		if n == v {
+			return isPushed
+		}
+	}
+	v.vec = append(v.vec, n)
+	isPushed = true
+	return isPushed
+}
+
 //Sort function sorts the vector
 func (v *Intvector) Sort() {
 	sort.Ints(v.vec)
@@ -279,3 +294,4 @@ func (v *Intvector) Mean() float64 {
 //add hash function
 //add median function
 //add mode function
+//add function to remove duplicates
