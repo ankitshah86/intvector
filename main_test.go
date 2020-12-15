@@ -109,3 +109,35 @@ func TestShift(t *testing.T) {
 		t.Errorf("Shift Test Failed got %d, want %d", got, want)
 	}
 }
+
+func TestUniquePush(t *testing.T) {
+
+	var s Intvector
+	length := 10
+	//try pushing multiple items
+	for i := 0; i < length; i++ {
+		//Deliberately insert duplicate elements
+		s.UniquePush(i)
+		s.UniquePush(i)
+		s.UniquePush(i)
+	}
+
+	wantLength := length //since duplicate elements are being inserted, the length shouldn't exceed loop iterations.
+	gotLength := len(s.vec)
+
+	if wantLength != gotLength {
+		t.Errorf("UniquePush Test failed : got length %d, want length %d", gotLength, wantLength)
+	}
+
+	m := make(map[int]int, 0)
+	//also need to ensure that each element in this array is unique
+	for _, v := range s.vec {
+		if _, ok := m[v]; !ok {
+			m[v] = 1
+		} else {
+			//this means that an element is duplicated
+			t.Errorf("UniquePush Test failed : Duplicate element %d found", v)
+		}
+	}
+
+}
