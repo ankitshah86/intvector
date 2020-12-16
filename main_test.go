@@ -110,6 +110,29 @@ func TestShift(t *testing.T) {
 	}
 }
 
+func TestUnshift(t *testing.T) {
+	var s Intvector
+	s.Insert([]int{2, 3, 4}...)
+	elem := 1
+
+	curLength := len(s.vec)
+	s.Unshift(elem)
+
+	wantElem := elem
+	gotElem := s.At(0)
+
+	if wantElem != gotElem {
+		t.Errorf("Unshift Test Failed for incoming element, want %d got %d ", wantElem, gotElem)
+	}
+
+	wantLength := curLength + 1
+	gotLength := len(s.vec)
+
+	if wantLength != gotLength {
+		t.Errorf("Unshift Length Test failed, want %d got %d", wantLength, gotLength)
+	}
+}
+
 func TestUniquePush(t *testing.T) {
 
 	var s Intvector
@@ -139,5 +162,4 @@ func TestUniquePush(t *testing.T) {
 			t.Errorf("UniquePush Test failed : Duplicate element %d found", v)
 		}
 	}
-
 }
