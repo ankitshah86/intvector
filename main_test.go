@@ -163,3 +163,17 @@ func TestUniquePush(t *testing.T) {
 		}
 	}
 }
+
+func TestSize(t *testing.T) {
+	var s Intvector
+	wantSize := 10
+
+	for i := 0; i < wantSize; i++ {
+		s.Push(i)
+	}
+	gotSize := s.Size()
+
+	if gotSize != wantSize {
+		t.Errorf("Size Test Failed : got size %d, want %d", gotSize, wantSize)
+	}
+}

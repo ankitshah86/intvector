@@ -282,7 +282,7 @@ func (v *Intvector) Average() float64 {
 	return s
 }
 
-//Mean returns the mean value of the entire vector
+//Mean returns the mean value of the entire vector - alias for averaage
 func (v *Intvector) Mean() float64 {
 	return v.Average()
 }
