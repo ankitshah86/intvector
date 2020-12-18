@@ -177,3 +177,17 @@ func TestSize(t *testing.T) {
 		t.Errorf("Size Test Failed : got size %d, want %d", gotSize, wantSize)
 	}
 }
+
+func TestClear(t *testing.T) {
+	var s Intvector
+	//populate the vector with some elementes
+	for i := 0; i < 10; i++ {
+		s.Push(i)
+	}
+	s.Clear()
+	wantLength := 0
+	gotLength := len(s.vec)
+	if wantLength != gotLength {
+		t.Errorf("Clear Test Failed : got vector length %d, want %d", gotLength, wantLength)
+	}
+}
