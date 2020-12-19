@@ -287,6 +287,21 @@ func (v *Intvector) Mean() float64 {
 	return v.Average()
 }
 
+//Frequency returns the frequency of each element as a key value map where key being the element and value being the occurance count
+func (v *Intvector) Frequency() map[int]int {
+	m := make(map[int]int)
+
+	for _, v := range v.vec {
+		if _, ok := m[v]; ok {
+			m[v]++
+		} else {
+			m[v] = 1
+		}
+	}
+
+	return m
+}
+
 //add summary funtion - with primary stats
 
 //add sortedInsert function
