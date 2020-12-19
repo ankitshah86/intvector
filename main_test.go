@@ -191,3 +191,31 @@ func TestClear(t *testing.T) {
 		t.Errorf("Clear Test Failed : got vector length %d, want %d", gotLength, wantLength)
 	}
 }
+
+func TestReverse(t *testing.T) {
+	var s Intvector
+
+	wantLength := 99
+
+	for i := 0; i < wantLength; i++ {
+		s.Push(i)
+	}
+
+	s.Reverse()
+
+	//make sure the length hasn't changed
+	gotLength := s.Size()
+
+	if gotLength != wantLength {
+		t.Errorf("Reverse Test Failed : got length %d, want length %d", gotLength, wantLength)
+	}
+
+	for i := 0; i < wantLength; i++ {
+		wantElem := 99 - i - 1
+		gotElem := s.At(i)
+		if wantElem != gotElem {
+			t.Errorf("Reverse Test Failed : got element %d, want %d", gotElem, wantElem)
+		}
+	}
+
+}
