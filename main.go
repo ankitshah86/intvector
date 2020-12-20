@@ -74,8 +74,13 @@ func (v *Intvector) Reverse() {
 }
 
 //At allows for accesing any element of the vector
-func (v *Intvector) At(i int) int {
-	return v.vec[i]
+func (v *Intvector) At(i int) (int, error) {
+
+	if i >= len(v.vec) || i < 0 {
+		return 0, errors.New("Index out of bounds")
+	}
+
+	return v.vec[i], nil
 }
 
 //Swap function swaps two elements of the vector
