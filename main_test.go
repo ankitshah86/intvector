@@ -119,7 +119,7 @@ func TestUnshift(t *testing.T) {
 	s.Unshift(elem)
 
 	wantElem := elem
-	gotElem := s.At(0)
+	gotElem, _ := s.At(0)
 
 	if wantElem != gotElem {
 		t.Errorf("Unshift Test Failed for incoming element, want %d got %d ", wantElem, gotElem)
@@ -212,10 +212,45 @@ func TestReverse(t *testing.T) {
 
 	for i := 0; i < wantLength; i++ {
 		wantElem := 99 - i - 1
-		gotElem := s.At(i)
+		gotElem, _ := s.At(i)
 		if wantElem != gotElem {
 			t.Errorf("Reverse Test Failed : got element %d, want %d", gotElem, wantElem)
 		}
+	}
+
+}
+
+func TestAt(t *testing.T) {
+	var s Intvector
+
+	length := 10
+	for i := 0; i < length; i++ {
+		s.Push(i * 2)
+	}
+
+	for i := 0; i < length; i++ {
+		want := i * 2
+		got, _ := s.At(i)
+
+		if want != got {
+			t.Errorf("At Test Failed : at index %d got element %d, want %d ", i, got, want)
+		}
+	}
+
+	//test for invalid indices
+	idx := -1
+
+	_, err := s.At(idx)
+
+	if err == nil {
+		t.Errorf("At Test Failed : should throw error for invalid index %d", idx)
+	}
+
+	idx = length
+	_, err = s.At(idx)
+
+	if err == nil {
+		t.Errorf("At Test Failed : should throw error for invalid index %d", idx)
 	}
 
 }
