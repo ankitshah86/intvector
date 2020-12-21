@@ -254,3 +254,40 @@ func TestAt(t *testing.T) {
 	}
 
 }
+
+func TestSwap(t *testing.T) {
+	var s Intvector
+
+	s.Insert([]int{1, 2, 3}...)
+
+	s.Swap(0, 1)
+
+	want := 2
+	got, _ := s.At(0)
+
+	if want != got {
+		t.Errorf("Swap Test Failed : want element %d at 0, got %d", want, got)
+	}
+
+	want = 1
+	got, _ = s.At(1)
+
+	if want != got {
+		t.Errorf("Swap Test Failed : want element %d at 0, got %d", want, got)
+	}
+
+	err := s.Swap(0, 0)
+	if err == nil {
+		t.Errorf("Swap Test Failed : should throw error for same index swap.")
+	}
+
+	err = s.Swap(0, s.Size()+1)
+	if err == nil {
+		t.Errorf("Swap Test Failed : should throw error for out of range index.")
+	}
+
+	err = s.Swap(-1, s.Size()-1)
+	if err == nil {
+		t.Errorf("Swap Test Failed : should throw error for out of range index.")
+	}
+}
