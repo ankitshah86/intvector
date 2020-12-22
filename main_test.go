@@ -291,3 +291,33 @@ func TestSwap(t *testing.T) {
 		t.Errorf("Swap Test Failed : should throw error for out of range index.")
 	}
 }
+
+func TestSet(t *testing.T) {
+	var s Intvector
+
+	//init 10 positions with zeros
+	for i := 0; i < 10; i++ {
+		s.Push(0)
+
+		//set the value
+		s.Set(i, i*2)
+
+		want := i * 2
+		got, _ := s.At(i)
+
+		if want != got {
+			t.Errorf("Set Test Failed : want element %d at index %d, got %d", want, i, got)
+		}
+	}
+
+	err := s.Set(s.Size()+1, 0)
+	if err == nil {
+		t.Errorf("Set Test Failed : should throw error for out of range index.")
+	}
+
+	err = s.Set(-1, 0)
+	if err == nil {
+		t.Errorf("Set Test Failed : should throw error for out of range index.")
+	}
+
+}
