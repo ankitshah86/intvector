@@ -353,3 +353,31 @@ func TestSortedPush(t *testing.T) {
 		t.Errorf("SortedPush Test Failed : The vector is unsorted")
 	}
 }
+
+func TestSort(t *testing.T) {
+	//Test this function with unsorted random elements
+	var s Intvector
+	testSlice := []int{4, 23, 62, 7, 2, 7, 8, 1, 1, 5, 3, 8, 93, 34, 38}
+
+	for _, v := range testSlice {
+		s.Push(v)
+	}
+
+	//sort vector here
+	s.Sort()
+
+	//check if the vector is sorted
+	isSoreted := true
+	for i, v := range s.vec {
+		if i > 1 {
+			if v < s.vec[i-1] {
+				isSoreted = false
+				break
+			}
+		}
+	}
+
+	if !isSoreted {
+		t.Errorf("Sort Test Failed : The vector is unsorted")
+	}
+}
