@@ -381,3 +381,31 @@ func TestSort(t *testing.T) {
 		t.Errorf("Sort Test Failed : The vector is unsorted")
 	}
 }
+
+func TestIsSorted(t *testing.T) {
+	var s Intvector
+	s.Push(1)
+	want := true
+	got := s.IsSorted()
+	if want != got {
+		t.Errorf("IsSorted Test failed : want %t got %t", want, got)
+	}
+
+	//test with sorted vector
+	s.Insert([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}...)
+	want = true
+	got = s.IsSorted()
+
+	if want != got {
+		t.Errorf("IsSorted Test failed : want %t got %t", want, got)
+	}
+
+	//apppend some random unsorted elements
+	s.Insert([]int{3, 5, 2, 7, 2, 5, 4, 6, 4, 23, 56, 9, 3, 3}...)
+	want = false
+	got = s.IsSorted()
+
+	if want != got {
+		t.Errorf("IsSorted Test failed : want %t got %t", want, got)
+	}
+}
