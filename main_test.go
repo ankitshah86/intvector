@@ -438,5 +438,34 @@ func TestFirst(t *testing.T) {
 	if want != got {
 		t.Errorf("First method Test failed : want %d, got %d", want, got)
 	}
+}
 
+func TestLast(t *testing.T) {
+	var s Intvector
+
+	res, err := s.Last()
+
+	want := 0
+	got := res
+
+	if err == nil {
+		t.Errorf("Last method Test failed : should throw error for empty vector")
+	}
+
+	if want != got {
+		t.Errorf("Last method Test failed : want %d, got %d", want, got)
+	}
+
+	s.Insert([]int{1, 2, 3, 4, 5}...)
+
+	want = 5
+	got, err = s.Last()
+
+	if err != nil {
+		t.Errorf("Last method Test failed : should not throw error for empty vector")
+	}
+
+	if want != got {
+		t.Errorf("Last method Test failed : want %d, got %d", want, got)
+	}
 }
