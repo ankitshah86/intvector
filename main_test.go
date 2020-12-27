@@ -469,3 +469,23 @@ func TestLast(t *testing.T) {
 		t.Errorf("Last method Test failed : want %d, got %d", want, got)
 	}
 }
+
+func TestSearch(t *testing.T) {
+	var s Intvector
+	n := 10
+	for i := 0; i <= n; i++ {
+		s.Push(i * 2)
+	}
+	want := 10
+	got := s.Search(10 * 2)
+	if want != got {
+		t.Errorf("Search test failed : want %d, got %d", want, got)
+	}
+	//also test for non - existent element
+	want = -1
+	got = s.Search(11 * 2)
+
+	if want != got {
+		t.Errorf("Search test failed : should return %d instead of %d for non-existent element", want, got)
+	}
+}
