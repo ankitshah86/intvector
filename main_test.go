@@ -489,3 +489,49 @@ func TestSearch(t *testing.T) {
 		t.Errorf("Search test failed : should return %d instead of %d for non-existent element", want, got)
 	}
 }
+
+func TestSearchAll(t *testing.T) {
+	var s Intvector
+	n := 10
+	for i := 0; i < n; i++ {
+		//this would ensure that each number will be be inserted the number of times equal to its value
+		for j := 0; j < i; j++ {
+			s.Push(i)
+		}
+	}
+
+	start := 0
+
+	for i := 0; i < n; i++ {
+		want := i
+		got := len(s.SearchAll(i))
+		if want != got {
+			t.Errorf("SearchAll Test Failed : want total count of %d to be %d, got %d", i, want, got)
+		}
+		//also check indexes  may need elaborate testing here
+		if i > 1 {
+			start += (i - 1)
+		}
+
+		wantSlice := []int{}
+		for j := 0; j < got; j++ {
+			wantSlice = append(wantSlice, start+j)
+		}
+		gotSlice := s.SearchAll(i)
+		//fmt.Println(wantSlice, gotSlice)
+
+		isSliceEqual := true
+
+		for j := 0; j < len(wantSlice); j++ {
+			if wantSlice[j] != gotSlice[j] {
+				isSliceEqual = false
+				break
+			}
+		}
+
+		if !isSliceEqual {
+			t.Errorf("SearchAll Test Failed : slice returned by SearchAll is inaccurate, want slice %d, got %d", wantSlice, gotSlice)
+		}
+
+	}
+}
