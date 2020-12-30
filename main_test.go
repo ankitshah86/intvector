@@ -561,3 +561,30 @@ func TestMin(t *testing.T) {
 		t.Errorf("Min Test Failed : want index %d, got %d", wantIdx, gotIdx)
 	}
 }
+
+func TestMax(t *testing.T) {
+	var s Intvector
+	wantNum, wantIdx := 0, -1
+	gotNum, gotIdx := s.Max()
+
+	if wantNum != gotNum {
+		t.Errorf("Min Test Failed : for empty vector, want num %d, got %d", wantNum, gotNum)
+	}
+
+	if wantIdx != gotIdx {
+		t.Errorf("Min Test Failed : for empty vector, want index %d, got %d", wantIdx, gotIdx)
+	}
+
+	s.Insert([]int{1, 2, -4, 34, 2788, 24, 2, 4, 4, 0, 223, 6453, 234677, 234, 89, 76, -778, 345, 22, 4, 66, 4, 3, 7, 9, 8, 1, 2}...)
+
+	wantNum, wantIdx = 234677, 12
+	gotNum, gotIdx = s.Max()
+
+	if wantNum != gotNum {
+		t.Errorf("Min Test Failed : want num %d, got %d", wantNum, gotNum)
+	}
+
+	if wantIdx != gotIdx {
+		t.Errorf("Min Test Failed : want index %d, got %d", wantIdx, gotIdx)
+	}
+}
