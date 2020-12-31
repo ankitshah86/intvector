@@ -588,3 +588,20 @@ func TestMax(t *testing.T) {
 		t.Errorf("Min Test Failed : want index %d, got %d", wantIdx, gotIdx)
 	}
 }
+
+func TestScaleBy(t *testing.T) {
+	var s Intvector
+	for i := 0; i < 10; i++ {
+		s.Push(i)
+	}
+
+	s.ScaleBy(5)
+
+	for i := 0; i < 10; i++ {
+		want := i * 5
+		got, _ := s.At(i)
+		if want != got {
+			t.Errorf("ScaleBy test failed : want %d at index %d, got %d", want, i, got)
+		}
+	}
+}
