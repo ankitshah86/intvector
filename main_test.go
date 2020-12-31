@@ -605,3 +605,20 @@ func TestScaleBy(t *testing.T) {
 		}
 	}
 }
+
+func TestAverage(t *testing.T) {
+	var s Intvector
+	want := 0.0
+	got := s.Average()
+	if want != got {
+		t.Errorf("Average test failed : want %f for empty vector, got %f", want, got)
+	}
+	for i := 0; i < 10; i++ {
+		s.Push(i)
+	}
+	want = 4.5 // average of 0 to 9
+	got = s.Average()
+	if want != got {
+		t.Errorf("Average test failed : want %f, got %f", want, got)
+	}
+}
