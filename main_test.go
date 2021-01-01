@@ -622,3 +622,32 @@ func TestAverage(t *testing.T) {
 		t.Errorf("Average test failed : want %f, got %f", want, got)
 	}
 }
+
+func TestFrequency(t *testing.T) {
+	var s Intvector
+	n := 10
+
+	for i := 1; i <= n; i++ {
+		for j := 0; j < i*5; j++ {
+			//push the element i * 5 times
+			s.Push(i)
+		}
+	}
+	m := s.Frequency()
+
+	//since each n element is inserted n * 5 times, the frequency should be n * 5
+	for k, v := range m {
+		want := k * 5
+		got := v
+		if want != got {
+			t.Errorf("Frequency Test failed : for element %d want freqeuncy %d, got %d", k, want, got)
+		}
+	}
+
+	//also need to check the length of the map to ensure no element was missed
+	wantLength := n
+	gotLength := len(m)
+	if wantLength != gotLength {
+		t.Errorf("Frequency Test failed : want map length %d, got %d", wantLength, gotLength)
+	}
+}
