@@ -97,10 +97,23 @@ func TestPop(t *testing.T) {
 
 func TestShift(t *testing.T) {
 	var s Intvector
+
+	//test shift with empty vector
+	got, err := s.Shift()
+	want := 0
+
+	if err == nil {
+		t.Errorf("Shift Test Failed : should throw error for empty vector")
+	}
+
+	if want != got {
+		t.Errorf("Shift Test failed. Want %d for empty vector got %d", want, got)
+	}
+
 	s.Insert([]int{1, 2, 3}...)
 
-	got, err := s.Shift()
-	want := 1
+	got, err = s.Shift()
+	want = 1
 	if err != nil {
 		t.Errorf("Shift Test failed")
 	}
@@ -325,7 +338,7 @@ func TestSet(t *testing.T) {
 func TestSortedPush(t *testing.T) {
 	//Test this function with random elements
 	var s Intvector
-	testSlice := []int{4, 23, 62, 7, 2, 7, 8, 1, 1, 5, 3, 8, 93, 34, 38}
+	testSlice := []int{4, 23, 62, 7, 2, 7, 8, 1, 1, 5, 3, 8, 93, 34, 38, -4, 3, 3, 3, 3, 3, 5, 23, 93}
 
 	for _, v := range testSlice {
 		s.SortedPush(v)
@@ -620,6 +633,17 @@ func TestAverage(t *testing.T) {
 	got = s.Average()
 	if want != got {
 		t.Errorf("Average test failed : want %f, got %f", want, got)
+	}
+}
+
+func TestMean(t *testing.T) {
+	var s Intvector
+	s.Insert([]int{1, 2, 3}...)
+	want := 2.0
+	got := s.Mean()
+
+	if want != got {
+		t.Errorf("Mean test failed : want %f, got %f", want, got)
 	}
 }
 
