@@ -2,7 +2,9 @@ package intvector
 
 import (
 	"errors"
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func TestPush(t *testing.T) {
@@ -644,6 +646,42 @@ func TestMean(t *testing.T) {
 
 	if want != got {
 		t.Errorf("Mean test failed : want %f, got %f", want, got)
+	}
+}
+
+func TestMedian(t *testing.T) {
+	var s Intvector
+
+	//need to try with both even and odd numbers
+	for i := 0; i < 100; i++ {
+		s.Push(i)
+	}
+
+	//shuffle the vector
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(s.vec), func(i int, j int) { s.vec[i], s.vec[j] = s.vec[j], s.vec[i] })
+
+	want := 49.5 // median of 0 - 99 is 49.5
+	got := s.Median()
+
+	if want != got {
+		t.Errorf("Median Test failed : want %f, got %f", want, got)
+	}
+
+	s.vec = []int{}
+	for i := 0; i < 101; i++ {
+		s.Push(i)
+	}
+
+	//shuffle the vector
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(s.vec), func(i int, j int) { s.vec[i], s.vec[j] = s.vec[j], s.vec[i] })
+
+	want = 50.0 // median of 0 - 100 is 50
+	got = s.Median()
+
+	if want != got {
+		t.Errorf("Median Test failed : want %f, got %f", want, got)
 	}
 }
 
