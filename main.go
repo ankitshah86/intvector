@@ -37,7 +37,7 @@ func (v *Intvector) Pop() (int, error) {
 	return s, nil
 }
 
-//Shift removes the firs element from the slice and returns it
+//Shift removes the first element from the slice and returns it
 func (v *Intvector) Shift() (int, error) {
 	var s int
 	if len(v.vec) > 0 {
@@ -292,6 +292,25 @@ func (v *Intvector) Mean() float64 {
 	return v.Average()
 }
 
+//Median returns the median of the entire vector
+func (v *Intvector) Median() float64 {
+	//a sorted clone needs to be created
+	var median float64
+	tmp := []int{}
+	tmp = append(tmp, v.vec...)
+	sort.Ints(tmp)
+
+	if len(tmp) > 0 {
+		if len(tmp)%2 == 0 {
+			median = (float64(tmp[(len(tmp)-1)/2]) + float64(tmp[((len(tmp)-1)/2)+1])) / 2.0
+		} else {
+			median = float64(tmp[len(tmp)/2])
+		}
+	}
+
+	return median
+}
+
 //Frequency returns the frequency of each element as a key value map where key being the element and value being the occurance count
 func (v *Intvector) Frequency() map[int]int {
 	m := make(map[int]int)
@@ -306,12 +325,3 @@ func (v *Intvector) Frequency() map[int]int {
 
 	return m
 }
-
-//add summary funtion - with primary stats
-
-//add sortedInsert function
-//add serialize function
-//add hash function
-//add median function
-//add mode function
-//add function to remove duplicates
