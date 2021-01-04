@@ -148,6 +148,46 @@ func TestUnshift(t *testing.T) {
 	}
 }
 
+func TestRemoveAt(t *testing.T) {
+	var s Intvector
+
+	err := s.RemoveAt(3) //test for out of bound index
+
+	if err == nil {
+		t.Errorf("RemoveAt test failed : should throw error for invalid index.")
+	}
+
+	err = s.RemoveAt(-1)
+
+	if err == nil {
+		t.Errorf("RemoveAt test failed : should throw error for invalid index.")
+	}
+
+	s.Insert([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}...)
+
+	prevLen := len(s.vec)
+	err = s.RemoveAt(3)
+
+	if err != nil {
+		t.Errorf("RemoveAt test failed : should not throw error for valid index.")
+	}
+
+	wantLen := prevLen - 1
+	gotLen := len(s.vec)
+
+	if wantLen != gotLen {
+		t.Errorf("RemoveAt length test failed : want %d, got %d", wantLen, gotLen)
+	}
+
+	//the third element should be 4 instead of 3 since it was removed
+	want := 4
+	got := s.vec[3]
+
+	if want != got {
+		t.Errorf("RemoveAt test failed : element not removed")
+	}
+}
+
 func TestUniquePush(t *testing.T) {
 
 	var s Intvector
