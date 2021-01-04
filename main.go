@@ -55,6 +55,16 @@ func (v *Intvector) Unshift(s int) {
 	v.vec = append([]int{s}, v.vec...)
 }
 
+//RemoveAt removes the element at the given idx
+func (v *Intvector) RemoveAt(idx int) error {
+	if idx >= len(v.vec) || idx < 0 {
+		return errors.New("Index out of bounds")
+	}
+
+	v.vec = append(v.vec[:idx], v.vec[idx+1:]...)
+	return nil
+}
+
 //Size returns the current size of the vector
 func (v *Intvector) Size() int {
 	return len(v.vec)
