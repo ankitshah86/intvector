@@ -65,6 +65,30 @@ func (v *Intvector) RemoveAt(idx int) error {
 	return nil
 }
 
+//RemoveFirstOf removes the first occurance of the num and returns true - if no num is found, false is returned
+func (v *Intvector) RemoveFirstOf(num int) bool {
+	isFound := false
+	idx := -1
+	for i, v := range v.vec {
+		if v == num {
+			isFound = true
+			idx = i
+			break
+		}
+	}
+
+	if isFound {
+		//better error handling here
+		if idx == len(v.vec) {
+			v.vec = v.vec[:idx]
+		} else {
+			v.vec = append(v.vec[:idx], v.vec[idx+1:]...)
+		}
+
+	}
+	return isFound
+}
+
 //Size returns the current size of the vector
 func (v *Intvector) Size() int {
 	return len(v.vec)
