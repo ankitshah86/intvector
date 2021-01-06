@@ -188,6 +188,52 @@ func TestRemoveAt(t *testing.T) {
 	}
 }
 
+func TestRemoveFirstOf(t *testing.T) {
+	var s Intvector
+
+	//try on an empty vector
+	wantIsRemoved := false //since we know 5 is not present in the vector
+	gotIsRemoved := s.RemoveFirstOf(5)
+
+	if wantIsRemoved != gotIsRemoved {
+		t.Errorf("RemoveFirstOf test failed : want %t for non-existent element, got %t", wantIsRemoved, gotIsRemoved)
+	}
+
+	for i := 0; i <= 10; i++ {
+		for j := 0; j < i; j++ {
+			s.Push(i)
+		}
+	}
+	length := len(s.vec)
+	//remove first of 5
+	wantIsRemoved = true //since we know 5 is present in the vector
+	gotIsRemoved = s.RemoveFirstOf(5)
+
+	if wantIsRemoved != gotIsRemoved {
+		t.Errorf("RemoveFirstOf test failed : want %t for existing element, got %t", wantIsRemoved, gotIsRemoved)
+	}
+
+	wantLength := length - 1
+	gotLength := len(s.vec)
+
+	if wantLength != gotLength {
+		t.Errorf("RemoveFirstOf test failed : want length %d after removal, got %d", wantLength, gotLength)
+	}
+
+	//do count too
+	//since 5 was originally inserted 5 times, after removal, it should only be present 4 times
+	want := 4
+	got := 0
+	for _, v := range s.vec {
+		if v == 5 {
+			got++
+		}
+	}
+	if want != got {
+		t.Errorf("RemoveFirstOf test failed : want frequency of element 5 to be %d, got %d", want, got)
+	}
+}
+
 func TestUniquePush(t *testing.T) {
 
 	var s Intvector
