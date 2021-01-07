@@ -89,6 +89,25 @@ func (v *Intvector) RemoveFirstOf(num int) bool {
 	return isFound
 }
 
+//RemoveAll removes all instances of the given number and returns the total count of the number removed
+func (v *Intvector) RemoveAll(num int) int {
+	count := 0
+
+	for i := 0; i < len(v.vec); i++ {
+		val := v.vec[i]
+		if val == num {
+			if i == len(v.vec) {
+				v.vec = v.vec[:i]
+			} else {
+				v.vec = append(v.vec[:i], v.vec[i+1:]...)
+			}
+			i--
+			count++
+		}
+	}
+	return count
+}
+
 //Size returns the current size of the vector
 func (v *Intvector) Size() int {
 	return len(v.vec)
