@@ -234,6 +234,39 @@ func TestRemoveFirstOf(t *testing.T) {
 	}
 }
 
+func TestRemoveAll(t *testing.T) {
+	var s Intvector
+
+	//try on an empty vector
+	wantCount := 0 //since we know 5 is not present in the vector
+	gotCount := s.RemoveAll(5)
+
+	if wantCount != gotCount {
+		t.Errorf("RemoveFirstOf test failed : want  count %d for non-existent element, got %d", wantCount, gotCount)
+	}
+
+	for i := 0; i <= 10; i++ {
+		for j := 0; j < i; j++ {
+			s.Push(i)
+		}
+	}
+	length := len(s.vec)
+	//remove first of 5
+	wantCount = 5 //since we know 5 is present in the vector
+	gotCount = s.RemoveAll(5)
+
+	if wantCount != gotCount {
+		t.Errorf("RemoveFirstOf test failed : want %d for existing element, got %d", wantCount, gotCount)
+	}
+
+	wantLength := length - 5
+	gotLength := len(s.vec)
+
+	if wantLength != gotLength {
+		t.Errorf("RemoveFirstOf test failed : want length %d after removal, got %d", wantLength, gotLength)
+	}
+}
+
 func TestUniquePush(t *testing.T) {
 
 	var s Intvector
