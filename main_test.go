@@ -832,3 +832,31 @@ func TestFrequency(t *testing.T) {
 		t.Errorf("Frequency Test failed : want map length %d, got %d", wantLength, gotLength)
 	}
 }
+
+func TestCountInstancesOf(t *testing.T) {
+
+	var s Intvector
+
+	want := 0
+	got := s.CountInstancesOf(10)
+
+	if want != got {
+		t.Errorf("CountInstancesOf test failed : want %d for empty vector, got %d", want, got)
+	}
+
+	n := 10
+
+	for i := 1; i <= n; i++ {
+		for j := 0; j < i; j++ {
+			//push the element i * 5 times
+			s.Push(i)
+		}
+	}
+
+	want = 5
+	got = s.CountInstancesOf(5)
+
+	if want != got {
+		t.Errorf("CountInstancesOf test failed : want %d for value 5, got %d", want, got)
+	}
+}
