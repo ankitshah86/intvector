@@ -378,3 +378,14 @@ func (v *Intvector) Frequency() map[int]int {
 
 	return m
 }
+
+//CountInstancesOf can be used to count the number of times an element occurs in the vector
+func (v *Intvector) CountInstancesOf(num int) int {
+	count := 0
+	for _, v := range v.vec {
+		if v == num {
+			count++
+		}
+	}
+	return count
+}
