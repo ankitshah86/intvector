@@ -108,6 +108,25 @@ func (v *Intvector) RemoveAll(num int) int {
 	return count
 }
 
+//MakeUnique ensures the vector has only unique elements by removing redundent ones
+func (v *Intvector) MakeUnique() {
+	if len(v.vec) < 2 {
+		return
+	}
+
+	//create a map and insert the values as a key
+	m := make(map[int]bool)
+	tmpVec := []int{}
+	for _, v := range v.vec {
+		if _, ok := m[v]; !ok {
+			tmpVec = append(tmpVec, v)
+			m[v] = true
+		}
+
+	}
+	v.vec = tmpVec
+}
+
 //Size returns the current size of the vector
 func (v *Intvector) Size() int {
 	return len(v.vec)
