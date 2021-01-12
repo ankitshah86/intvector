@@ -267,6 +267,42 @@ func TestRemoveAll(t *testing.T) {
 	}
 }
 
+func TestMakeUnique(t *testing.T) {
+	var s Intvector
+	s.Push(1)
+
+	wantLen := 1
+	s.MakeUnique()
+	gotLen := len(s.vec)
+	if wantLen != gotLen {
+		t.Errorf("MakeUnique Test failed : want length %d, got %d", wantLen, gotLen)
+	}
+
+	n := 10
+	for i := 1; i <= n; i++ {
+		for j := 0; j < i; j++ {
+			s.Push(i)
+		}
+	}
+
+	wantLen = n
+	s.MakeUnique()
+	gotLen = len(s.vec)
+
+	if wantLen != gotLen {
+		t.Errorf("MakeUnique Test failed : want length %d, got %d", wantLen, gotLen)
+	}
+
+	//also need to ensure that each element is unique
+	m := make(map[int]bool)
+	for i, v := range s.vec {
+		if _, ok := m[v]; ok {
+			t.Errorf("MakeUnique test failed : duplicate element %d detected at index %d.", v, i)
+		}
+		m[v] = true
+	}
+}
+
 func TestUniquePush(t *testing.T) {
 
 	var s Intvector
