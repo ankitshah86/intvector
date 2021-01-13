@@ -383,6 +383,34 @@ func (v *Intvector) Median() float64 {
 	return median
 }
 
+//Mode returns the mode of the vector. Bimodal and multimodal distributions will throw error.
+func (v *Intvector) Mode() (int, error) {
+
+	if v.Size() == 0 {
+		return 0, errors.New("Empty Vector")
+	}
+
+	frq := v.Frequency()
+	//the values from frequency need to be sorted - and the number with the highest frequency should be mode
+	tmpVec := []int{}
+
+	//also create a reverse map for quick lookup
+	reverseFrq := make(map[int]int)
+	for k, v := range frq {
+		tmpVec = append(tmpVec, v)
+		reverseFrq[v] = k
+	}
+	sort.Ints(tmpVec)
+
+	if len(tmpVec) > 1 && tmpVec[len(tmpVec)-1] == tmpVec[len(tmpVec)-2] {
+		////this means that the disribution is either bimodal or multimodal
+		return 0, errors.New("No unique mode available")
+	}
+	return reverseFrq[tmpVec[len(tmpVec)-1]], nil
+}
+
+//TODO Modes func for bimodal or multimodal distributions
+
 //Frequency returns the frequency of each element as a key value map where key being the element and value being the occurance count
 func (v *Intvector) Frequency() map[int]int {
 	m := make(map[int]int)
