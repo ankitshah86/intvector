@@ -840,6 +840,55 @@ func TestMedian(t *testing.T) {
 	}
 }
 
+func TestMode(t *testing.T) {
+	var s Intvector
+	//test with empty vector
+	m, e := s.Mode()
+
+	want := 0
+	got := m
+
+	if want != got {
+		t.Errorf("Mode test failed for empty vector : want %d, got %d", want, got)
+	}
+
+	if e == nil {
+		t.Error("Mode test failed : should throw error for empty vector")
+	}
+
+	n := 10
+	for i := 1; i <= n; i++ {
+		for j := 0; j < i; j++ {
+			//push the element i * 5 times
+			s.Push(i)
+		}
+	}
+
+	want = 10
+	got, e = s.Mode()
+
+	if want != got {
+		t.Errorf("Mode test failed : want %d, got %d", want, got)
+	}
+
+	if e != nil {
+		t.Error("Mode test failed : should not throw error for vector with valid mode")
+	}
+
+	//test with bimodal distribution
+	s.Push(9) //by pushing 9, both 10 and 9 have same frequency
+	want = 0
+	got, e = s.Mode()
+
+	if want != got {
+		t.Errorf("Mode test failed : want %d, got %d", want, got)
+	}
+
+	if e == nil {
+		t.Error("Mode test failed : should throw error for vector without single mode")
+	}
+}
+
 func TestFrequency(t *testing.T) {
 	var s Intvector
 	n := 10
