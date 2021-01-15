@@ -409,7 +409,44 @@ func (v *Intvector) Mode() (int, error) {
 	return reverseFrq[tmpVec[len(tmpVec)-1]], nil
 }
 
-//TODO Modes func for bimodal or multimodal distributions
+//Modes returns the Modes of the vector. This function is to be used for multimodal distribution.
+func (v *Intvector) Modes() ([]int, error) {
+
+	var modes []int
+	if v.Size() == 0 {
+		return modes, errors.New("Empty Vector")
+	}
+
+	if v.Size() == 1 {
+		return modes, errors.New("Unique mode")
+	}
+
+	frq := v.Frequency()
+	//the values from frequency need to be sorted - and the number with the highest frequency should be mode
+
+	if len(frq) == 1 {
+		return modes, errors.New("Unique mode")
+	}
+
+	tmpVec := []int{}
+	//also create a reverse map for quick lookup
+	reverseFrq := make(map[int][]int)
+	for k, v := range frq {
+		tmpVec = append(tmpVec, v)
+		if _, ok := reverseFrq[v]; ok {
+			reverseFrq[v] = append(reverseFrq[v], k)
+		} else {
+			reverseFrq[v] = []int{k}
+		}
+	}
+	sort.Ints(tmpVec)
+
+	if len(reverseFrq[tmpVec[len(tmpVec)-1]]) == 1 {
+		return modes, errors.New("Unique mode")
+	}
+
+	return reverseFrq[tmpVec[len(tmpVec)-1]], nil
+}
 
 //Frequency returns the frequency of each element as a key value map where key being the element and value being the occurance count
 func (v *Intvector) Frequency() map[int]int {
