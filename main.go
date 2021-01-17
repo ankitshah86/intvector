@@ -473,3 +473,12 @@ func (v *Intvector) CountInstancesOf(num int) int {
 	}
 	return count
 }
+
+//IsEmpty returns true if the vector is empty, false otherwise
+func (v *Intvector) IsEmpty() bool {
+	if len(v.vec) == 0 {
+		return true
+	}
+
+	return false
+}
