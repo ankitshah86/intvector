@@ -889,6 +889,57 @@ func TestMode(t *testing.T) {
 	}
 }
 
+func TestModes(t *testing.T) {
+	var s Intvector
+	//test with empty vector
+	modes, err := s.Modes()
+
+	if err == nil {
+		t.Error("Modes test failed : should return error for empty vector")
+	}
+
+	//test with vector with single element - unique mode
+	s.Push(0)
+	modes, err = s.Modes()
+
+	if err == nil {
+		t.Error("Modes test failed : should return error for Unique mode")
+	}
+
+	//test with unique mode
+	for i := 0; i < 10; i++ {
+		for j := 0; j < i; j++ {
+			s.Push(i)
+		}
+	}
+
+	modes, err = s.Modes()
+
+	if err == nil {
+		t.Error("Modes test failed : Should return error for Unique mode")
+	}
+
+	s.Clear()
+	for i := 0; i < 10; i++ {
+		for j := 0; j < i%5; j++ {
+			s.Push(i)
+		}
+	}
+	modes, err = s.Modes()
+
+	//here, two modes are expected 4 and 9 and error should be nil
+	if err != nil {
+		t.Error("Modes test failed : Error should be nil for a valid multimodal distribution")
+	}
+
+	if len(modes) != 2 {
+		t.Errorf("Modes test failed : Expected %d modes for the given vector, found %d", 2, len(modes))
+	}
+
+	if !((modes[0] == 4 && modes[1] == 9) || (modes[1] == 4 && modes[0] == 9)) {
+		t.Errorf("Modes test failed : Expected modes [4,9]  for the given vector, found %d", modes)
+	}
+}
 func TestFrequency(t *testing.T) {
 	var s Intvector
 	n := 10
