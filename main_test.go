@@ -996,3 +996,23 @@ func TestCountInstancesOf(t *testing.T) {
 		t.Errorf("CountInstancesOf test failed : want %d for value 5, got %d", want, got)
 	}
 }
+
+func TestIsEmpty(t *testing.T) {
+
+	var s Intvector
+
+	want := true
+	got := s.IsEmpty()
+
+	if want != got {
+		t.Error("IsEmpty Test failed : Should return true for empty vector")
+	}
+
+	s.Push(1)
+	want = false
+	got = s.IsEmpty()
+
+	if want != got {
+		t.Error("IsEmpty Test failed : Should return false for non-empty vector")
+	}
+}
