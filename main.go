@@ -1,6 +1,7 @@
 package intvector
 
 import (
+	"encoding/binary"
 	"errors"
 	"runtime"
 	"sort"
@@ -481,4 +482,16 @@ func (v *Intvector) IsEmpty() bool {
 	}
 
 	return false
+}
+
+//Serialize turns the vector of integers into a slice of bytes
+func (v *Intvector) Serialize() []byte {
+	var b []byte
+	for i := 0; i < v.Size(); i++ {
+		bts := make([]byte, 8)
+		binary.BigEndian.PutUint64(bts, uint64(v.vec[i]))
+
+		b = append(b, bts...)
+	}
+	return b
 }
