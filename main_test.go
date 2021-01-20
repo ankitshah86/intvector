@@ -1016,3 +1016,28 @@ func TestIsEmpty(t *testing.T) {
 		t.Error("IsEmpty Test failed : Should return false for non-empty vector")
 	}
 }
+
+func TestSerialized(t *testing.T) {
+	var s Intvector
+
+	for i := 0; i < 10; i++ {
+		s.Push(i)
+	}
+
+	wantAr := []byte{}
+
+	for i := 0; i < 10; i++ {
+		//since the serialized version is bigEndian, the first seven bytes are zero and the last byte is the same as the number itself for any positive number less then 256
+		wantAr = append(wantAr, []byte{0, 0, 0, 0, 0, 0, 0, byte(i)}...)
+	}
+	gotAr := s.Serialized()
+
+	//check the length of the array
+	for i := 0; i < len(gotAr); i++ {
+		want := wantAr[i]
+		got := gotAr[i]
+		if want != got {
+			t.Errorf("Serialized Test failed : want %d got %d at index %d", want, got, i)
+		}
+	}
+}
