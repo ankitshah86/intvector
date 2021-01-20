@@ -484,8 +484,8 @@ func (v *Intvector) IsEmpty() bool {
 	return false
 }
 
-//Serialize turns the vector of integers into a slice of bytes
-func (v *Intvector) Serialize() []byte {
+//Serialized returns the vector of integers as a slice of bytes
+func (v *Intvector) Serialized() []byte {
 	var b []byte
 	for i := 0; i < v.Size(); i++ {
 		bts := make([]byte, 8)
