@@ -495,3 +495,28 @@ func (v *Intvector) Serialized() []byte {
 	}
 	return b
 }
+
+//DeserializeFrom takes a byte array and parses into an int vector
+func (v *Intvector) DeserializeFrom(b []byte, append bool) error {
+
+	var err error
+	if len(b)%8 != 0 {
+		err = errors.New("Invalid length")
+		return err
+	}
+
+	if len(b) == 0 {
+		err = errors.New("Empty byte Array")
+		return err
+	}
+
+	if !append {
+		v.Clear()
+	}
+
+	for i := 0; i < len(b); i = i + 8 {
+		v.Push(int(binary.BigEndian.Uint64(b[i : i+8])))
+	}
+
+	return err
+}
