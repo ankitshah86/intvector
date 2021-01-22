@@ -1041,3 +1041,65 @@ func TestSerialized(t *testing.T) {
 		}
 	}
 }
+
+func TestDeserializeFrom(t *testing.T) {
+
+	var s Intvector
+	var ar []byte
+
+	//test for empty byte array
+	err := s.DeserializeFrom(ar, false)
+
+	if err == nil {
+		t.Error("DeserializeFrom Test failed : should return error for empty byte array")
+	}
+
+	err = nil
+	//test for invalid length
+	for i := 0; i < 5; i++ {
+		ar = append(ar, byte(i))
+	}
+	err = s.DeserializeFrom(ar, false)
+	if err == nil {
+		t.Error("DeserializeFrom Test failed : should return error for byte array with invalid length")
+	}
+	ar = []byte{}
+	for i := 0; i < 10; i++ {
+		//since the serialized version is bigEndian, the first seven bytes are zero and the last byte is the same as the number itself for any positive number less then 256
+		ar = append(ar, []byte{0, 0, 0, 0, 0, 0, 0, byte(i)}...)
+	}
+
+	err = nil
+	//also need to test for negative number
+	ar = append(ar, []byte{255, 255, 255, 255, 255, 255, 255, 253}...) // Big Endian bytearray for -3
+
+	err = s.DeserializeFrom(ar, false)
+
+	if err != nil {
+		t.Error("DeserializeFrom Test failed : should not return error for valid input")
+	}
+
+	wantLen := 11
+	gotLen := len(s.vec)
+
+	if wantLen != gotLen {
+		t.Errorf("DeserializeFrom Test failed : for deserialized vector, want Length %d got %d", wantLen, gotLen)
+	}
+
+	for i := 0; i < 10; i++ {
+		want := i
+		got := s.vec[i]
+
+		if want != got {
+			t.Errorf("DeserializeFrom Test failed : want %d at index %d, got %d", want, i, got)
+		}
+	}
+
+	want := -3
+	got := s.vec[10]
+
+	if want != got {
+		t.Errorf("DeserializeFrom Test failed : want %d at index %d, got %d", want, 10, got)
+	}
+
+}
