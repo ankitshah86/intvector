@@ -1,7 +1,9 @@
 package intvector
 
 import (
+	"crypto/sha256"
 	"encoding/binary"
+	"encoding/hex"
 	"errors"
 	"runtime"
 	"sort"
@@ -519,4 +521,13 @@ func (v *Intvector) DeserializeFrom(b []byte, append bool) error {
 	}
 
 	return err
+}
+
+//Hash returns the sha256 hash of the serialized version of the vector
+func (v *Intvector) Hash() string {
+	s := v.Serialized()
+	h := sha256.New()
+	h.Write(s)
+	hash := hex.EncodeToString(h.Sum(nil))
+	return hash
 }
