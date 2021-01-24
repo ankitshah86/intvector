@@ -1103,3 +1103,18 @@ func TestDeserializeFrom(t *testing.T) {
 	}
 
 }
+
+func TestHash(t *testing.T) {
+	var s Intvector
+	for i := 0; i <= 10; i++ {
+		s.Push(i)
+	}
+
+	//This hash was generated externally for 1 to 10 (8 bytes each) from https://cryptii.com/pipes/hash-function
+	want := "8371835a0296f57979bfe31ef0e27051908f2aac77efbec3c57b73f7be01f141"
+	got := s.Hash()
+
+	if want != got {
+		t.Errorf("Hash Test failed : want %s got %s", want, got)
+	}
+}
